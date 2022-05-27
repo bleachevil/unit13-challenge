@@ -31,7 +31,7 @@ pic data
 crypto_df.drop(columns="Unnamed: 0", inplace = True)
 crypto_df
 ```
-pic drop0
+![](https://github.com/bleachevil/unit13-challenge/blob/main/pic/data.png?raw=true)
 
 
 #### Keep only cryptocurrencies that are trading and drop IsTrading
@@ -43,7 +43,7 @@ crypto_df.drop(columns="index", inplace = True)
 crypto_df.drop(columns="IsTrading", inplace = True)
 crypto_df
 ```
-pic dropIsTrading
+!](https://github.com/bleachevil/unit13-challenge/blob/main/pic/dropistrading.png?raw=true)
 
 #### drop NA & Null and remove rows with cryptocurrencies having no coins mined
 ```
@@ -51,7 +51,7 @@ crypto_df.dropna(inplace=True)
 crypto_df = crypto_df.drop(crypto_df[crypto_df.TotalCoinsMined == 0].index)
 crypto_df
 ```
-pic drop no coin
+![](https://github.com/bleachevil/unit13-challenge/blob/main/pic/dropnocoin.png?raw=true)
 
 #### Store the 'CoinName'column in its own DataFrame prior to dropping it from crypto_df
 ```
@@ -60,7 +60,7 @@ coinname.reset_index(inplace=True)
 coinname.drop(columns = "index", inplace= True)
 coinname
 ```
-pic coinname
+![](https://github.com/bleachevil/unit13-challenge/blob/main/pic/coinname.png?raw=true)
 
 #### Drop the 'CoinName' and create X and dummy variables for text features
 ```
@@ -69,14 +69,14 @@ X['TotalCoinSupply'] = pd.to_numeric(X['TotalCoinSupply'])
 X = pd.get_dummies(X,columns=["Algorithm","ProofType"])
 X
 ```
-pic of X
+![](https://github.com/bleachevil/unit13-challenge/blob/main/pic/X.png?raw=true)
 
 #### Standardize data
 ```
 iris_scaled = StandardScaler().fit_transform(X)
 print(iris_scaled[0:5])
 ```
-pic of standardize
+![](https://github.com/bleachevil/unit13-challenge/blob/main/pic/standardize.png?raw=true)
 
 ### Reducing Dimensions Using PCA
 ```
@@ -87,7 +87,7 @@ pcs_df = pd.concat([coinname,df_iris_pca], axis= 'columns')
 pcs_df.set_index("CoinName",inplace=True)
 pcs_df
 ```
-pic of psc
+![](https://github.com/bleachevil/unit13-challenge/blob/main/pic/pcs.png?raw=true)
 
 ### Clustering Crytocurrencies Using K-Means
 
@@ -107,7 +107,7 @@ elbow_data = {"k": k, "inertia": inertia}
 df_elbow = pd.DataFrame(elbow_data)
 df_elbow.hvplot.line(x="k", y="inertia", title="Elbow Curve", xticks=k)
 ```
-pic of elbow
+![](https://github.com/bleachevil/unit13-challenge/blob/main/pic/elbow.png?raw=true)
 
 #### Running K-Means with k= 4
 ```
@@ -121,7 +121,7 @@ predictions = model.predict(pcs_df)
 pcs_df["class"] = model.labels_
 pcs_df.head()
 ```
-pic of kmean
+![](https://github.com/bleachevil/unit13-challenge/blob/main/pic/kmean.png?raw=true)
 
 ### Visualizing Results
 
@@ -132,7 +132,7 @@ clustered_df = pd.concat([crypto_df,pcs_df], axis= 'columns')
 clustered_df['TotalCoinSupply'] = pd.to_numeric(clustered_df['TotalCoinSupply'])
 clustered_df
 ```
-pic of clustered
+![](https://github.com/bleachevil/unit13-challenge/blob/main/pic/clustered.png?raw=true)
 ```
 clustered_df.hvplot.scatter(
     x="TotalCoinsMined",
@@ -140,17 +140,18 @@ clustered_df.hvplot.scatter(
     by="class",
     hover_cols=["CoinName"])
 ```
-pic of plot
+![](https://github.com/bleachevil/unit13-challenge/blob/main/pic/plot.png?raw=true)
 
 #### Table of Tradable Cryptocurrencies
 ```
 clustered_df.hvplot.table(columns=["CoinName", "Algorithm", "ProofType", "TotalCoinSupply", "TotalCoinsMined", "class"], sortable=True, selectable=True)
 ```
-pic of table
+
+![](https://github.com/bleachevil/unit13-challenge/blob/main/pic/table.png?raw=true)
 ```
 clustered_df.index.value_counts()
 ```
-pic of count
+![](https://github.com/bleachevil/unit13-challenge/blob/main/pic/count.png?raw=true)
 
 
 
